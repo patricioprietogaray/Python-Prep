@@ -1,22 +1,52 @@
+import datetime
 import sys
-# Comprobación de seguridad, ejecutar sólo si se recibe 3 argumentos
-if len(sys.argv) == 2:
-    import datetime
-    import os
-    marca_de_tiempo = datetime.datetime.now()
-    marca_de_tiempo = int(datetime.datetime.timestamp(marca_de_tiempo))
+import os 
 
-    #temperatura = sys.argv[1]
-    #humedad = sys.argv[2]
-    lluvia = sys.argv[1]
-    temperatura = input('Ingrese la temperatura en grados centígrados')
-    humedad = input('Ingrese el porcentaje de humedad')
-    linea = str(marca_de_tiempo) + ',' + temperatura + ',' + humedad + ',' + lluvia
+dir_actual = os.getcwd()
+archivo = 'clase09-ejer02.csv'
+titulos = 'Temperatura, Humedad, Llovio, Hora\n'
+titulo_csv = False
+bucle = True
+bucle_validar = True
 
-    logs_lluvia = open('clase09_ej2.csv', 'a')
-    logs_lluvia.write(linea+'\n')
-    logs_lluvia.close()
+# preguntar si existe el archivo csv
+if not os.path.isfile(archivo): 
+    with open(archivo, 'w', encoding='utf-8') as archi: 
+        archi.write(titulos)
 
-else:
-    print("ERROR: Introdujo una cantidad de argumentos distinta de tres (3)")
-    print('Ejemplo: clase09_ej1.py <temperatura> <humedad> <True o False>')
+# print(sys.argv)
+if len(sys.argv) == 4:
+    try:
+        temp = float(sys.argv[1])
+        hume = float(sys.argv[2])
+        if sys.argv[3] == "False" or sys.argv[3] == 'false': 
+            llovio = False
+        else:
+            llovio = True
+    except TypeError as e: 
+        print("""Error en el ingreso de los parámetros... 
+              El parámetro debe ser Número entero o decimal. 
+              
+              Ejemplo de parámetro: 
+                python3 clase09_ej2.py 15.0 82.0 True
+                python3 clase09_ej2.py 15 82 False""")
+        
+        sys.exit()
+    except ValueError: 
+        print("""Error en el ingreso de los parámetros... 
+               El parámetro debe ser Número entero o decimal. 
+               
+               Ejemplo de parámetro: 
+                  python3 clase09_ej2.py 15.0 82.0 True
+                  python3 clase09_ej2.py 15 82 False""")
+        sys.exit()
+else: 
+    print("Debe ingresar tres parámetros: Temperatura, Humedad, ¿llovió? True/False")
+    sys.exit()
+
+
+with open(archivo, 'a') as arch: 
+    arch.write(f"{temp},{hume},{llovio},{datetime.datetime.now()}\n")
+    
+
+
