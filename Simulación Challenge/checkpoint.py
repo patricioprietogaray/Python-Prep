@@ -1,4 +1,6 @@
-# Importante: No modificar ni el nombre ni los argumetos que reciben las funciones, sólo deben escribir
+# Importante: 
+# No modificar ni el nombre ni los argumetos que reciben las funciones, 
+# sólo deben escribir
 # código dentro de las funciones ya definidas.
 
 def Factorial(numero):
@@ -11,8 +13,14 @@ def Factorial(numero):
         Factorial(4) debe retornar 24
         Factorial(-2) debe retornar nulo
     '''
-    #Tu código aca:
-    return 'Funcion incompleta'
+    #Tu código aca:                           
+    if not isinstance(numero, int):           
+        return None                           
+    if numero == 1:                           
+        return 1                              
+    if numero < 1:                            
+        return None                           
+    return numero * Factorial(numero -1)      
 
 def EsPrimo(valor):
     '''
@@ -26,7 +34,17 @@ def EsPrimo(valor):
         EsPrimo(8) debe retornar False
     '''
     #Tu código aca:
-    return 'Funcion incompleta'
+    # return 'Funcion incompleta'
+    try: 
+        valor = int(valor)
+        if valor < 2:
+            return False
+        for i in range(2, int(valor ** 0.5) + 1):
+            if valor % i == 0:
+                return False
+        return True
+    except ValueError: 
+        return None
     
 def ClaseAnimal(especie, color):
     '''
@@ -47,4 +65,15 @@ def ClaseAnimal(especie, color):
         a.CumpliAnios() -> debe devolver 3
     '''
     #Tu código aca:
-    return 'Funcion incompleta'
+    # return 'Funcion incompleta'
+    class Animal:
+        def __init__(self, especie, color):
+            self.edad = 0
+            self.especie = especie
+            self.color = color
+        
+        def CumplirAnios(self):
+            self.edad += 1
+            return self.edad
+    return Animal(especie, color)
+
